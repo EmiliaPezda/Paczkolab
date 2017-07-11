@@ -1,5 +1,7 @@
 <?php
 
+require_once './interfaces/DBInterface.php';
+
 class Database implements DBInterface {
 
     private $conn;

@@ -2,13 +2,10 @@
 include_once 'class/DBConn.php';
 include_once 'class/abstract/DB.php';
 
-<<<<<<< HEAD
-+include_once 'class/DBConn.php';
-+include_once 'class/abstract/DB.php';
 
-=======
+
 $dsn = '';
->>>>>>> da389ca9e2b7f35eda2c01fb356220edfef9cb6d
+
 $servername = "localhost";
 $username = "root";
 $password = "coderslab";
@@ -27,10 +24,9 @@ $baseName = "Paczkolab";
 $conn = new DBConn($dsn, $password, $username);
 
 
-<<<<<<< HEAD
+
 $setEncodingSql = "SET CHARSET utf8";
 $conn->query($setEncodingSql);
 
-=======
->>>>>>> da389ca9e2b7f35eda2c01fb356220edfef9cb6d
+
 DB::$conn = $conn;

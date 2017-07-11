@@ -6,7 +6,7 @@
  * Date: 09.07.17
  * Time: 15:41
  */
-class Address im
+class Address
 {
 
 }
