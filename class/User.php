@@ -4,7 +4,11 @@ require_once 'interfaces/ActiveRecord.php';
 require_once 'DBconn.php';
 
 
+<<<<<<< HEAD
 class User extends DB implements ActiveRecord, JsonSerializable  {
+=======
+class User extends DB implements ActiveRecord, JsonSerializable {
+>>>>>>> da389ca9e2b7f35eda2c01fb356220edfef9cb6d
 
     private $id,$name, $surname, $address_id, $credits, $password;
 
@@ -23,11 +27,19 @@ class User extends DB implements ActiveRecord, JsonSerializable  {
 
     static function load($id)
     {
+<<<<<<< HEAD
         {
             $sql = "";
             $params = [];
             return self::$conn->getData($sql, $params);
         }
+=======
+        // TODO: Implement load() method.
+        $sql = "";
+        $params = [];
+        return self::$conn->getData($sql, $params);
+
+>>>>>>> da389ca9e2b7f35eda2c01fb356220edfef9cb6d
     }
 
     static function loadAll()
