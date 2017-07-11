@@ -3,7 +3,7 @@
 require_once './interfaces/ActiveRecord.php';
 
 
-class User implements ActiveRecord, JsonSerializable {
+class User extends DB implements ActiveRecord, JsonSerializable {
 
     private $id,$name, $surname, $address_id, $credits, $password;
 
@@ -15,6 +15,10 @@ class User implements ActiveRecord, JsonSerializable {
     static function load($id)
     {
         // TODO: Implement load() method.
+        $sql = "";
+        $params = [];
+        return self::$conn->getData($sql, $params);
+
     }
 
     static function loadAll()
