@@ -9,10 +9,3 @@
     </php>
 </phpunit>
 
-<testsuites>
-    <testsuite name="All">
-        <directory>./tests</directory>
-        <!--<file>/test/UserTest.php</file>-->
-        <!-- <exclude>/tests/quarantine</exclude>-->
-    </testsuite>
-</testsuites>

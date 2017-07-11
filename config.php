@@ -1,5 +1,8 @@
 <?php
 
++include_once 'class/DBConn.php';
++include_once 'class/abstract/DB.php';
+
 $servername = "localhost";
 $username = "root";
 $password = "coderslab";
@@ -15,4 +18,4 @@ if ($conn->connect_error) {
 $setEncodingSql = "SET CHARSET utf8";
 $conn->query($setEncodingSql);
 
-DataBase::$conn = $conn;
+DB::$conn = $conn;

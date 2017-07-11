@@ -1,0 +1,110 @@
+<?xml version="1.0"?>
+<mysqldump xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<database name="Paczkolab">
+	<table_data name="User">
+	</table_data>
+	<table_data name="address">
+	<row>
+		<field name="id">2</field>
+		<field name="city">Warszawa</field>
+		<field name="code">00-999</field>
+		<field name="street">Jerozolimskie</field>
+		<field name="flat">200</field>
+	</row>
+	<row>
+		<field name="id">3</field>
+		<field name="city">Wrocław</field>
+		<field name="code">11-200</field>
+		<field name="street">Leżajska</field>
+		<field name="flat">159</field>
+	</row>
+	<row>
+		<field name="id">12</field>
+		<field name="city">Poznań</field>
+		<field name="code">02-300</field>
+		<field name="street">Mielżyńskiego</field>
+		<field name="flat">15</field>
+	</row>
+	</table_data>
+	<table_data name="box">
+	<row>
+		<field name="id">1</field>
+		<field name="size_id">5</field>
+		<field name="address_id">2</field>
+	</row>
+	<row>
+		<field name="id">2</field>
+		<field name="size_id">1</field>
+		<field name="address_id">7</field>
+	</row>
+	<row>
+		<field name="id">3</field>
+		<field name="size_id">6</field>
+		<field name="address_id">6</field>
+	</row>
+	<row>
+		<field name="id">4</field>
+		<field name="size_id">1</field>
+		<field name="address_id">1</field>
+	</row>
+	<row>
+		<field name="id">5</field>
+		<field name="size_id">1</field>
+		<field name="address_id">1</field>
+	</row>
+	<row>
+		<field name="id">8</field>
+		<field name="size_id">1</field>
+		<field name="address_id">1</field>
+	</row>
+	</table_data>
+	<table_data name="parcel">
+	<row>
+		<field name="id">10</field>
+		<field name="address_id">2</field>
+		<field name="user_id">17</field>
+		<field name="size_id">1</field>
+	</row>
+	</table_data>
+	<table_data name="size">
+	<row>
+		<field name="id">1</field>
+		<field name="size">XLL</field>
+		<field name="price">5</field>
+	</row>
+	<row>
+		<field name="id">5</field>
+		<field name="size">XL</field>
+		<field name="price">20</field>
+	</row>
+	<row>
+		<field name="id">8</field>
+		<field name="size">XSS</field>
+		<field name="price">12</field>
+	</row>
+	<row>
+		<field name="id">9</field>
+		<field name="size">S</field>
+		<field name="price">10</field>
+	</row>
+	</table_data>
+	<table_data name="user">
+	<row>
+		<field name="id">17</field>
+		<field name="address_id">12</field>
+		<field name="name">Jarek</field>
+		<field name="surname">Mróż</field>
+		<field name="credits">15</field>
+		<field name="pass">$2y$10$Hum9tM2ol1lSTVwx69YY7en2gzXFSCPVeUFNdp08s.o59LNZF.nee</field>
+	</row>
+	<row>
+		<field name="id">18</field>
+		<field name="address_id">2</field>
+		<field name="name">Piotr</field>
+		<field name="surname">Florkiewicz</field>
+		<field name="credits">10</field>
+		<field name="pass">$2y$10$E50KFUlLy1EVtjaTfYhOn.oUC7cWoFp21sgCkubZy.DwX3Knnt8OG</field>
+	</row>
+	</table_data>
+</database>
+</mysqldump>

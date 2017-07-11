@@ -1,9 +1,9 @@
 <?php
 
 
-abstract class Database {
+abstract class DBconn implements DBInterface {
 
-    private $pdo;
+    private $conn;
 
     function __construct($dsn, $db_pass, $db_user){
         $this->pdo = new PDO($dsn, $db_pass, $db_user);

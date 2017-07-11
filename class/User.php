@@ -1,20 +1,33 @@
 <?php
 
-require_once './interfaces/ActiveRecord.php';
+require_once 'interfaces/ActiveRecord.php';
+require_once 'DBconn.php';
 
 
-class User implements ActiveRecord, JsonSerializable {
+class User extends DB implements ActiveRecord, JsonSerializable  {
 
     private $id,$name, $surname, $address_id, $credits, $password;
 
-    function __construct($id,$name, $surname, $address_id, $credits, $password)
+    function __construct($id, $name, $surname, $address_id, $credits, $password)
     {
+        $this->id = 0;
+        $this->name = $name;
+        $this->surname = $surname;
+        $this->address_id = $address_id;
+        $this->credits = $credits;
+        $this->password = $password;
 
     }
 
+
+
     static function load($id)
     {
-        // TODO: Implement load() method.
+        {
+            $sql = "";
+            $params = [];
+            return self::$conn->getData($sql, $params);
+        }
     }
 
     static function loadAll()
@@ -135,7 +148,11 @@ class User implements ActiveRecord, JsonSerializable {
      */
     private function setPassword($password)
     {
-        $this->password = $password;
+        $options = [
+            'cost' => 11,
+            'salt' => random_bytes(22),
+        ];
+        $this->password = password_hash($password, PASSWORD_BCRYPT, $options);
     }
 
 

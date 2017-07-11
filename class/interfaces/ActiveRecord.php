@@ -9,13 +9,13 @@ interface ActiveRecord{
      * @param $id
      * @return object
      */
-    function load($id);
+    static function load($id);
 
     /**
      * @return Array of Objects / Exception on error
      */
 
-    function loadAll()
+    static function loadAll();
 
     /**
      * @return mixed
