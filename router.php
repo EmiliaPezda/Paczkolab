@@ -11,42 +11,42 @@ $returnUrl = null;
 $request = $_SERVER['REQUEST_URI'];
 $arrayRequest = explode('/', $request);
 
+if($arrayRequest[3]){
+    $requestClass = $arrayRequest[3];
 
-if($arrayRequest[2]){
-    $requestClass = $arrayRequest[2];
 }else {
     die("Niepoprawny adres");
 }
 
-
-if(isset($arrayRequest[3])){
-    $requestParameter = $arrayRequest[3];
+if(isset($arrayRequest[4])){
+    $requestParameter = $arrayRequest[4];
 }else {
     $requestParameter = null;
 }
+
 
 //wyświetlenie stron
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
     $array = [];
-    
+
     if($requestParameter == null){
         //wyświetlenie strony
-    
+
         if($requestClass == 'user'){
-            $array = User::loadAllFromDB();
+            $array = User::loadAll();
             
         }else if($requestClass == 'box'){
-            $array = Box::loadAllFromDB();
+            $array = Box::loadAll();
             
         }else if($requestClass == 'size'){
-            $array = Size::loadAllFromDB();
+            $array = Size::loadAll();
             
         }else if($requestClass == 'address'){
-            $array = Address::loadAllFromDB();
+            $array = Address::loadAll();
             
         }else if($requestClass == 'parcel'){
-            $array = Parcel::loadAllFromDB();
+            $array = Parcel::loadAll();
         }
         
         
@@ -56,23 +56,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         
         if($requestClass == 'user'){
             $user = new User();
-            $array = $user->loadFromDB($requestParameter);
+            $array = $user->load($requestParameter);
             
         }else if($requestClass == 'box'){
             $user = new Box();
-            $array = $user->loadFromDB($requestParameter);
+            $array = $user->load($requestParameter);
             
         }else if($requestClass == 'size'){
             $user = new Size();
-            $array = $user->loadFromDB($requestParameter);
+            $array = $user->load($requestParameter);
             
         }else if($requestClass == 'address'){
             $user = new Address();
-            $array = $user->loadFromDB($requestParameter);
+            $array = $user->load($requestParameter);
             
         }else if($requestClass == 'parcel'){
             $user = new Parcel();
-            $array = $user->loadFromDB($requestParameter);
+            $array = $user->load($requestParameter);
         }
         
         
@@ -165,7 +165,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
             // $pass =         $put_vars['pass'];
             
             $class = new User();
-            $class->loadFromDB($id);
+            $class->load($id);
             
             $class->setAddressId($address_id);
             $class->setName($name);
@@ -178,7 +178,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
             $address_id = $put_vars['address_id'];
             $size_id = $put_vars['size_id'];
             $class = new Box();
-            $class->loadFromDB($id);
+            $class->load($id);
             $class->setAddressId($address_id);
             $class->setSizeId($size_id);
             break;
@@ -187,7 +187,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
             $size = $put_vars['size'];
             $price = $put_vars['price'];
             $class = new Size();
-            $class->loadFromDB($id);
+            $class->load($id);
             $class->setSize($size);
             $class->setPrice($price);
             break;
@@ -198,7 +198,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
             $street = $put_vars['street'];
             $flat   = $put_vars['flat'];
             $class = new Address();
-            $class->loadFromDB($id);
+            $class->load($id);
             
             $class->setCity($city);
             $class->setCode($code);
@@ -211,7 +211,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
             $size_id = $put_vars['size_id'];
             $user_id = $put_vars['user_id'];
             $class = new Parcel();
-            $class->loadFromDB($id);
+            $class->load($id);
             $class->setAddressId($address_id);
             $class->setSizeId($size_id);
             $class->setUserId($user_id);
@@ -236,34 +236,34 @@ if ($_SERVER['REQUEST_METHOD'] == 'DELETE') {
      switch ($requestClass) {
         case 'user':
             $class = new User();
-            $class->loadFromDB($id);
+            $class->load($id);
             break;
         
         case 'box':
             $class = new Box();
-            $class->loadFromDB($id);
+            $class->load($id);
             break;
         
         case 'size':
             $class = new Size();
-            $class->loadFromDB($id);
+            $class->load($id);
             break;
         
         case 'address':
             $class = new Address();
-            $class->loadFromDB($id);
+            $class->load($id);
             break;
         
         case 'parcel':
             $class = new Parcel();
-            $class->loadFromDB($id);
+            $class->load($id);
             break;
         
         default:
             break;
     }
 
-    if( $class->deleteFromDB() == false ) {
+    if( $class->delete() == false ) {
         return false;
     }else {
         return true;
