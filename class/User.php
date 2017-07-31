@@ -7,7 +7,7 @@ require_once 'abstract/DB.php';
 
 class User extends DB implements ActiveRecord, JsonSerializable{
 
-    protected $id,$name, $surname, $address_id, $credits, $password;
+    protected $id,$name, $surname, $address_id, $credits, $pass;
 
     public function __construct() {
         $this->id = -1;
@@ -28,7 +28,7 @@ class User extends DB implements ActiveRecord, JsonSerializable{
             $this->pass = $row['pass'];
             $this->address_id = $row['address_id'];
 
-            return $row;
+            return $this;
 
         } else {
 
@@ -54,12 +54,41 @@ class User extends DB implements ActiveRecord, JsonSerializable{
 
     public function save()
     {
-        // TODO: Implement save() method.
-    }
+        if ($this->id == -1) {
 
+            $sql = "INSERT INTO user(address_id, name, surname, credits, pass) VALUES 
+            ('$this->address_id', '$this->name', '$this->surname', '$this->credits', '$this->pass')";
+
+            if ($result = self::$conn->query($sql)) {
+                $this->id = self::$conn->lastInsertId();
+                $this->name = $name;
+                $this->surname = $surname;
+                $this->credits = $credits;
+                $this->pass = $pass;
+
+                return $this;
+
+            } else {
+
+                return false;
+
+            }
+        }
+
+    }
     public function update()
     {
-        // TODO: Implement update() method.
+        $sql = "UPDATE user SET name=$this->name, surname=$this->surname, credits=$this->credits WHERE id=$this->id";
+
+        if ($result = self::$conn->query($sql)) {
+            $this->name = $name;
+            $this->surname = $surname;
+            $this->credits = $credits;
+
+            return $this;
+        } else {
+            return false;
+        }
     }
 
     public function delete()
@@ -83,7 +112,7 @@ class User extends DB implements ActiveRecord, JsonSerializable{
     /**
      * @param mixed $id
      */
-    private function setId($id)
+    public function setId($id)
     {
         $this->id = $id;
     }
@@ -153,48 +182,16 @@ class User extends DB implements ActiveRecord, JsonSerializable{
     }
 
     /**
-     * @return mixed
-     */
-    public function getPassword()
-    {
-        return $this->password;
-    }
-
-    /**
      * @param mixed $password
      */
-    private function setPassword($password)
+    public function setPass($pass)
     {
         $options = [
             'cost' => 11,
             'salt' => random_bytes(22),
         ];
-        $this->password = password_hash($password, PASSWORD_BCRYPT, $options);
+        $this->pass = password_hash($pass, PASSWORD_BCRYPT, $options);
     }
 
-    public function saveToDB()
-    {
-        if ($this->id == -1) {
-            // przygotowanie zapytania
-            $sql = "INSERT INTO user(address_id, name, surname, credits, pass) VALUES (:address_id, :name, :surname, :credits, :pass)";
-            $prepare = $conn->prepare($sql);
-
-            // Wysłanie zapytania do bazy z kluczami i wartościami do podmienienia
-            $result = $prepare->execute(
-                [
-                    'address_id'     => $this->address_id,
-                    'name'     => $this->name,
-                    'surname'     => $this->surname,
-                    'credits'        => $this->credits,
-                    'pass' => $this->pass,
-                ]
-            );
-
-            // Pobranie ostatniego ID dodanego rekordu
-            $this->id = $conn->lastInsertId();
-            return (bool)$result;
-        }
-        return false;
-    }
 
 }

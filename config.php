@@ -10,8 +10,14 @@ $baseName = "Paczkolab";
 $dsn = "mysql:host=$servername;dbname=$baseName;charset=utf8";
 
 
-$conn = new DBConn($dsn, $username, $password);
 
+$conn = new PDO($dsn, $username, $password);
 
 
 DB::$conn = $conn;
+
+if ($conn->errorCode() != null) {
+    var_dump($conn->errorInfo());
+    die();
+}
+

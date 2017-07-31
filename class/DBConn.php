@@ -1,24 +1,27 @@
 <?php
 
-require_once './interfaces/DBInterface.php';
+require_once 'interfaces/DBInterface.php';
+require_once 'abstract/DB.php';
 
-class Database implements DBInterface {
+class DBconn extends DB implements DBInterface {
 
-    private $conn;
+    static public $conn;
 
-    function __construct($dsn, $db_pass, $db_user){
-        $this->pdo = new PDO($dsn, $db_pass, $db_user);
+    function __construct($dsn, $db_user, $db_pass){
+        self::$conn = new PDO($dsn, $db_user, $db_pass);
+        return self::$conn;
     }
 
     function query($sql, $params_arr){
-        $this->pdo->prepare($sql);
+        $query = self::$conn->prepare($sql);
         $result = $query->execute($params_arr);
         return $result;
     }
 
     function getData($sql, $params_arr){
-        $query = $this->pdo->prepare($sql);
+        $query = self::$conn->prepare($sql);
         $result = $query->execute($params_arr);
-        return $result->getAssoc();
+        return $result->fetchAll();
     }
 }
+

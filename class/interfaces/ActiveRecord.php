@@ -9,26 +9,26 @@ interface ActiveRecord{
      * @param $id
      * @return object
      */
-    static function load($id);
+    public function load($id);
 
     /**
      * @return Array of Objects / Exception on error
      */
 
-    static function loadAll();
+    public static function loadAll();
 
     /**
      * @return mixed
      */
-    function update();
+    public function update();
 
     /**
      * @return Inserted Object / Exception on error
      */
-    function save();
+    public function save();
 
     /**
      * @return true / Exception on error
      */
-    function delete();
+    public function delete();
 }

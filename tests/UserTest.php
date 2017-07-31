@@ -1,10 +1,10 @@
 <?php
 
-require_once './../class/User.php';
+require_once '../class/User.php';
 
 use PHPUnit\DbUnit\TestCase;
 
-class UserTests extends TestCase{
+class userTest extends TestCase{
 
     private $user;
     private $pdo;
@@ -20,12 +20,12 @@ class UserTests extends TestCase{
 
     protected function getConnection()
     {
-        return $this->createDefaultDBConnection($this->pdo,    $GLOBALS['DB_NAME']);
+        return $this->createDefaultDBConnection($this->pdo, $GLOBALS['DB_NAME']);
     }
 
     protected function getDataSet()
     {
-        $dataMysql = $this->createMySQLXMLDataSet('./phpunit.xml');
+        $dataMysql = $this->createMySQLXMLDataSet('./../data.xml');
         return $dataMysql;
     }
 
@@ -36,7 +36,7 @@ class UserTests extends TestCase{
     }
 
     function testLoad(){
-        $this->assertNull( $this->user->load(10));
+        $this->assert();
     }
 
 

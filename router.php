@@ -144,7 +144,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             break;
     }
     
-    if( $class->saveToDB() == false ) {
+    if( $class->save() == false ) {
         return false;
     }else {
         return true;
@@ -158,7 +158,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
 
     switch ($requestClass) {
         case 'user':
-            $address_id =   $put_vars['address_id'];
+            //$address_id =   $put_vars['address_id'];
             $name =         $put_vars['name'];
             $surname=       $put_vars['surname'];
             $credits =      $put_vars['credits'];
@@ -167,7 +167,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
             $class = new User();
             $class->load($id);
             
-            $class->setAddressId($address_id);
+            //$class->setAddressId($address_id);
             $class->setName($name);
             $class->setSurname($surname);
             $class->setCredits($credits);

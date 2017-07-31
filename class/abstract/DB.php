@@ -1,7 +1,8 @@
 <?php
 
 abstract class DB {
-    static $conn;
+
+    public static $conn;
 
 }
 
