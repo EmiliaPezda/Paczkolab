@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-	var url = '../../router.php/size/',
+	let url = '../../router.php/size/',
 		viewSize = $('#view-size');
 
 	//// Show SIZE data in the view/size
@@ -27,7 +27,7 @@ $(document).ready(function() {
 	// Do action (edit, delete) on data in table
     function insertContentSize(size) {
     	$.each(size, function(){
-    		var tr = $('<tr>'),
+    		let tr = $('<tr>'),
 				tdId = $('<td>', {class: "id"}),
 				tdSize = $('<td>', {class: "size"}),
 				tdPrice = $('<td>', {class: "price"}),
@@ -57,18 +57,18 @@ $(document).ready(function() {
 			tdSize.text(this.size);
 			tdPrice.text(this.price);
 			tdAction.text(this.action);
-    	})
+    	});
     	// ACTION - Edit SIZE data
     	viewSize.on('click', '.edit-btn', function(){
 		
-			var editForm = $(this).next('form');
-			var edit = $(this).next('form').find('input[type=submit]');
+			let editForm = $(this).next('form');
+			let edit = $(this).next('form').find('input[type=submit]');
 
 			editForm.toggleClass('hide');
 
-			var id = $(this).parent().parent().find('td[class=id]').text();
-			var sizeValue = $(this).parent().parent().find('td[class=size]').text();
-			var priceValue = $(this).parent().parent().find('td[class=price]').text();
+			let id = $(this).parent().parent().find('td[class=id]').text();
+			let sizeValue = $(this).parent().parent().find('td[class=size]').text();
+			let priceValue = $(this).parent().parent().find('td[class=price]').text();
 			
 			editForm.children('input[name=size]').val(sizeValue);
 			editForm.children('input[name=price]').val(priceValue);
@@ -76,8 +76,8 @@ $(document).ready(function() {
 			edit.on('click', function(e){
 				e.preventDefault();
 
-				var size = $(this).siblings('#size').val();
-				var price = $(this).siblings('#price').val();
+				let size = $(this).siblings('#size').val();
+				let price = $(this).siblings('#price').val();
 
 				$.ajax({
 	                type: "PUT",
@@ -96,13 +96,13 @@ $(document).ready(function() {
             		}
 	            });
 			})
-		})
+		});
 
 		// ACTION - Delete SIZE data
 		viewSize.on('click', '.delete-btn', function(e){
 			e.preventDefault();
 		
-			var id = $(this).parent().parent().find('td[class=id]').text();
+			let id = $(this).parent().parent().find('td[class=id]').text();
 			$.ajax({
                 type: "DELETE",
                 url: url,

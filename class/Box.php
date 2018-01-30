@@ -3,9 +3,11 @@
 require_once 'interfaces/ActiveRecord.php';
 require_once 'abstract/DB.php';
 
-class Parcel extends DB implements ActiveRecord, JsonSerializable{
 
-    protected $id, $address_id, $user_id, $size_id;
+
+class Box extends DB implements ActiveRecord, JsonSerializable{
+
+    protected $id, $size_id, $address_id;
 
     /**
      * @return mixed
@@ -13,6 +15,30 @@ class Parcel extends DB implements ActiveRecord, JsonSerializable{
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSizeId()
+    {
+        return $this->size_id;
+    }
+
+    /**
+     * @param mixed $size_id
+     */
+    public function setSizeId($size_id)
+    {
+        $this->sizeId = $size_id;
     }
 
     /**
@@ -31,37 +57,6 @@ class Parcel extends DB implements ActiveRecord, JsonSerializable{
         $this->address_id = $address_id;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getUserId()
-    {
-        return $this->user_id;
-    }
-
-    /**
-     * @param mixed $user_id
-     */
-    public function setUserId($user_id)
-    {
-        $this->user_id = $user_id;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getSizeId()
-    {
-        return $this->size_id;
-    }
-
-    /**
-     * @param mixed $size_id
-     */
-    public function setSizeId($size_id)
-    {
-        $this->size_id = $size_id;
-    }
 
     public function __construct() {
         $this->id = -1;
@@ -70,17 +65,16 @@ class Parcel extends DB implements ActiveRecord, JsonSerializable{
     public function load($id)
     {
 
-        $sql = "Select * from parcel where id = $id";
+        $sql = "Select * from box where id = $id";
 
         if ($result = self::$conn->query($sql)) {
             $row = $result->fetch(PDO::FETCH_ASSOC);
 
             $this->id = $row['id'];
-            $this->name = $row['address_id'];
-            $this->surname = $row['user_id'];
-            $this->credits = $row['size_id'];
+            $this->size_id = $row['size_id'];
+            $this->address_id = $row['address_id'];
 
-            return $row;
+            return $this;
 
         } else {
 
@@ -91,7 +85,8 @@ class Parcel extends DB implements ActiveRecord, JsonSerializable{
 
     static public function loadAll(){
 
-        $sql = "SELECT * FROM parcel";
+        $sql = "SELECT * FROM box";
+
         if ($result = self::$conn->query($sql)) {
             foreach ($result as $key => $value) {
                 $row[$key] = $value;
@@ -107,14 +102,13 @@ class Parcel extends DB implements ActiveRecord, JsonSerializable{
     {
         if ($this->id == -1) {
 
-            $sql = "INSERT INTO parcel(address_id, user_id, size_id) VALUES 
-            ('$this->address_id', '$this->user_id', '$this->size_id')";
+            $sql = "INSERT INTO box(size_id, address_id) VALUES 
+            ('$this->size_id', '$this->address_id')";
 
             if ($result = self::$conn->query($sql)) {
                 $this->id = self::$conn->lastInsertId();
-                $this->address_id = $address_id;
-                $this->user_id = $user_id;
                 $this->size_id = $size_id;
+                $this->address_id = $address_id;
 
                 return $this;
 
@@ -126,13 +120,11 @@ class Parcel extends DB implements ActiveRecord, JsonSerializable{
         }
 
     }
-
     public function update()
     {
-        $sql = "UPDATE parcel SET address_id=$this->address_id, user_id=$this->user_id, size_id=$this->size_id WHERE id=$this->id";
-
+        $sql = "UPDATE box SET size_id='$this->size_id', address_id='$this->address_id'";
+        var_dump($sql);
         if ($result = self::$conn->query($sql)) {
-
             return $this;
 
         } else {
@@ -142,11 +134,10 @@ class Parcel extends DB implements ActiveRecord, JsonSerializable{
 
     public function delete()
     {
-        $sql = "DELETE FROM parcel WHERE id=$this->id";
+        $sql = "DELETE FROM box WHERE id=$this->id";
 
         if ($result = self::$conn->query($sql)) {
             $this->address_id = null;
-            $this->user_id = null;
             $this->size_id = null;
             $this->id = -1;
 

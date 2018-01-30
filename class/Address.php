@@ -7,16 +7,14 @@ require_once 'abstract/DB.php';
 
 class Address extends DB implements ActiveRecord, JsonSerializable{
 
-    private $id;
-    private $city;
-    private $code;
-    private $street;
-    private $flat;
+    protected $id;
+    protected $city;
+    protected $code;
+    protected $street;
+    protected $flat;
 
     public function __construct( ) {
-
         $this->id = -1;
-
     }
 
     public function getId(){
@@ -58,8 +56,7 @@ class Address extends DB implements ActiveRecord, JsonSerializable{
 
     public function load($address_id) {
 
-        $sql = "SELECT * FROM address JOIN user ON
-                address.id = user.address_id WHERE address.id = $address_id";
+        $sql = "SELECT * FROM address WHERE id = $address_id";
 
         if ($result = self::$conn->query($sql)) {
 
@@ -83,22 +80,63 @@ class Address extends DB implements ActiveRecord, JsonSerializable{
 
     public function save()
     {
-        // TODO: Implement save() method.
+        if ($this->id == -1) {
+
+            $sql = "INSERT INTO `address` (`city`, `code`, `street`, `flat`) VALUES ('$this->city', '$this->code', '$this->street', '$this->flat')";
+
+            if ($result = self::$conn->query($sql)) {
+                $row   = $result->fetch(PDO::FETCH_ASSOC);
+
+                $this->id = self::$conn->lastInsertId();
+                $this->city = $row['city'];
+                $this->code = $row['code'];
+                $this->street = $row['street'];
+                $this->flat = $row['flat'];
+
+                return $this;
+
+            } else {
+                return false;
+
+            }
+        }
     }
 
     public function update()
     {
-        // TODO: Implement update() method.
+        $sql = "UPDATE `address` SET `city`='$this->city', `code`='$this->code', `street`='$this->street', `flat`='$this->flat'  WHERE `id`=$this->id ";
+        var_dump($sql);
+        if ($result = self::$conn->query($sql)) {
+            return $this;
+
+        } else {
+            return false;
+        }
     }
 
     public function delete()
     {
-        // TODO: Implement delete() method.
+        $sql = "DELETE FROM `address` WHERE id=$this->id";
+
+        if ($result = self::$conn->query($sql)) {
+            $this->city = null;
+            $this->code = null;
+            $this->street = null;
+            $this->flat = null;
+            $this->id = -1;
+
+            return true;
+
+        } else {
+
+            return false;
+
+        }
     }
 
     function jsonSerialize()
     {
-        // TODO: Implement jsonSerialize() method.
+        return $this->array;
     }
 
 

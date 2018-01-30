@@ -5,7 +5,6 @@ require_once 'abstract/DB.php';
 
 class DBconn extends DB implements DBInterface {
 
-    static public $conn;
 
     function __construct($dsn, $db_user, $db_pass){
         self::$conn = new PDO($dsn, $db_user, $db_pass);

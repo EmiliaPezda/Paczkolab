@@ -1,5 +1,5 @@
 $(document).ready(function() {
-   var url = '../../router.php/address/',
+   let url = '../../router.php/address/',
         viewAddress = $('#view-address');
 
     //// Show ADDRESS data in the view/address
@@ -25,7 +25,7 @@ $(document).ready(function() {
     // Do action (edit, delete) on data in table
     function insertContentAddress(address) {
         $.each(address, function() {
-            var tr = $('<tr>'),
+            let tr = $('<tr>'),
                 tdId = $('<td>', {class: "id"}),
                 tdCity = $('<td>', {class: "city"}),
                 tdCode = $('<td>', {class: "code"}),
@@ -65,21 +65,21 @@ $(document).ready(function() {
             tdStreet.text(this.street);
             tdFlat.text(this.flat);
             tdAction.text(this.action);
-        })
+        });
 
         // ACTION - Edit ADDRESS data
         viewAddress.on('click', '.edit-btn', function(){
         
-            var editForm = $(this).next('form');
-            var edit = $(this).next('form').find('input[type=submit]');
+            let editForm = $(this).next('form');
+            let edit = $(this).next('form').find('input[type=submit]');
 
             editForm.toggleClass('hide');
 
-            var id = $(this).parent().parent().find('td[class=id]').text();
-            var cityValue = $(this).parent().parent().find('td[class=city]').text();
-            var codeValue = $(this).parent().parent().find('td[class=code]').text();
-            var streetValue = $(this).parent().parent().find('td[class=street]').text();
-            var flatValue = $(this).parent().parent().find('td[class=flat]').text();
+            let id = $(this).parent().parent().find('td[class=id]').text();
+            let cityValue = $(this).parent().parent().find('td[class=city]').text();
+            let codeValue = $(this).parent().parent().find('td[class=code]').text();
+            let streetValue = $(this).parent().parent().find('td[class=street]').text();
+            let flatValue = $(this).parent().parent().find('td[class=flat]').text();
             
             editForm.children('input[name=city]').val(cityValue);
             editForm.children('input[name=code]').val(codeValue);
@@ -90,10 +90,10 @@ $(document).ready(function() {
             edit.on('click', function(e){
                 e.preventDefault();
 
-                var city = $(this).siblings('#city').val();
-                var code = $(this).siblings('#code').val();
-                var street = $(this).siblings('#street').val();
-                var flat = $(this).siblings('#flat').val();
+                let city = $(this).siblings('#city').val();
+                let code = $(this).siblings('#code').val();
+                let street = $(this).siblings('#street').val();
+                let flat = $(this).siblings('#flat').val();
 
                 $.ajax({
                     type: "PUT",
@@ -114,13 +114,13 @@ $(document).ready(function() {
                     }
                 });
             })
-        })
+        });
 
         // ACTION - Delete ADDRESS data
         viewAddress.on('click', '.delete-btn', function(e){
             e.preventDefault();
         
-            var id = $(this).parent().parent().find('td[class=id]').text();
+            let id = $(this).parent().parent().find('td[class=id]').text();
             
             $.ajax({
                 type: "DELETE",

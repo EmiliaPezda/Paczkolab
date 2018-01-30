@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-	var viewUser = $('#view-user'),
+	let viewUser = $('#view-user'),
 		url = '../../router.php/user/';
 
 	//// Show USER data in the view/user
@@ -27,7 +27,7 @@ $(document).ready(function() {
 	// Do action (edit, delete) on data in table
     function insertContentUser(user) {
     	$.each(user, function(){
-    		var tr = $('<tr>'),
+    		let tr = $('<tr>'),
 				tdId = $('<td>', {class: "id"}),
 				tdAddress = $('<td>', {class: "address"}),
 				tdName = $('<td>', {class: "name"}),
@@ -67,8 +67,8 @@ $(document).ready(function() {
 		    	})
 		    }
 
-			var id = this.address_id;
-			var url = '../../router.php/address/';
+			let id = this.address_id;
+			let url = '../../router.php/address/';
 
 			// Show address from database ADDRESS in table
 			$.ajax({
@@ -93,15 +93,15 @@ $(document).ready(function() {
     	})
     	// Edit USER data
     	viewUser.on('click', '.edit-btn', function(){
-			var editForm = $(this).next('form');
-			var edit = $(this).next('form').find('input[type=submit]');
+			let editForm = $(this).next('form');
+			let edit = $(this).next('form').find('input[type=submit]');
 
 			editForm.toggleClass('hide');
 
-			var id = $(this).parent().parent().find('td[class=id]').text();
-			var nameValue = $(this).parent().parent().find('td[class=name]').text();
-			var surnameValue = $(this).parent().parent().find('td[class=surname]').text();
-			var creditsValue = $(this).parent().parent().find('td[class=credits]').text();
+			let id = $(this).parent().parent().find('td[class=id]').text();
+			let nameValue = $(this).parent().parent().find('td[class=name]').text();
+			let surnameValue = $(this).parent().parent().find('td[class=surname]').text();
+			let creditsValue = $(this).parent().parent().find('td[class=credits]').text();
 			
 			editForm.children('input[name=name]').val(nameValue);
 			editForm.children('input[name=surname]').val(surnameValue);
@@ -110,17 +110,17 @@ $(document).ready(function() {
 			edit.on('click', function(e){
 				e.preventDefault();
                                 
-                                var addressid = this.address_id;
-				var name = $(this).siblings('#name').val();
-				var surname = $(this).siblings('#surname').val();
-				var credits = $(this).siblings('#credits').val();
+				let addressid = this.address_id;
+				let name = $(this).siblings('#name').val();
+				let surname = $(this).siblings('#surname').val();
+				let credits = $(this).siblings('#credits').val();
 
 				$.ajax({
 	                type: "PUT",
 	                url: url,
 	                data: {
-                                                id: id,
-                                                address_id: addressid,
+	                	id: id,
+						address_id: addressid,
 						name: name,
 						surname: surname,
 						credits: credits,
@@ -141,7 +141,7 @@ $(document).ready(function() {
 		viewUser.on('click', '.delete-btn', function(e){
 			e.preventDefault();
 		
-			var id = $(this).parent().parent().find('td[class=id]').text();
+			let id = $(this).parent().parent().find('td[class=id]').text();
 			$.ajax({
                             type: "DELETE",
                             url: url,

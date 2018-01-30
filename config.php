@@ -4,7 +4,7 @@ include_once 'class/abstract/DB.php';
 
 $servername = "localhost";
 $username = "root";
-$password = "coderslab";
+$password = "lamusy44";
 $baseName = "Paczkolab";
 
 $dsn = "mysql:host=$servername;dbname=$baseName;charset=utf8";

@@ -25,18 +25,20 @@ class userTest extends TestCase{
 
     protected function getDataSet()
     {
-        $dataMysql = $this->createMySQLXMLDataSet('./../data.xml');
+        $dataMysql = $this->createMySQLXMLDataSet('./data.xml');
         return $dataMysql;
     }
 
 
     protected function setUp()
     {
-        $this->user = new User(0, 'jan', 'kowalski', 'Darłówko 15', 15, '123456');
+        parent::setUp();
+        User::SetConnection($this->pdo);
+        $this->user = new User(5, 'jan', 'kowalski', 'Darłówko 15', 15, '123456');
     }
 
     function testLoad(){
-        $this->assert();
+        $this->assertFalse($this->user->load(100));
     }
 
 

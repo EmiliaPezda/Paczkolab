@@ -11,19 +11,17 @@ $returnUrl = null;
 $request = $_SERVER['REQUEST_URI'];
 $arrayRequest = explode('/', $request);
 
-if($arrayRequest[3]){
-    $requestClass = $arrayRequest[3];
-
+if($arrayRequest[4]){
+    $requestClass = $arrayRequest[4];
 }else {
     die("Niepoprawny adres");
 }
 
-if(isset($arrayRequest[4])){
-    $requestParameter = $arrayRequest[4];
+if(isset($arrayRequest[5])){
+    $requestParameter = $arrayRequest[5];
 }else {
     $requestParameter = null;
 }
-
 
 //wyświetlenie stron
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
@@ -52,32 +50,31 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         
     } else {
         //pobranie konkretnego id i zwrócenie w formie json
-        
-        
+
         if($requestClass == 'user'){
             $user = new User();
             $array = $user->load($requestParameter);
             
         }else if($requestClass == 'box'){
-            $user = new Box();
-            $array = $user->load($requestParameter);
+            $box = new Box();
+            $array = $box->load($requestParameter);
             
         }else if($requestClass == 'size'){
-            $user = new Size();
-            $array = $user->load($requestParameter);
+            $size = new Size();
+            $array = $size->load($requestParameter);
             
         }else if($requestClass == 'address'){
-            $user = new Address();
-            $array = $user->load($requestParameter);
+            $address = new Address();
+            $array = $address->load($requestParameter);
             
         }else if($requestClass == 'parcel'){
-            $user = new Parcel();
-            $array = $user->load($requestParameter);
+            $parcel = new Parcel();
+            $array = $parcel->load($requestParameter);
         }
         
         
     }
-    
+
     echo json_encode($array);
     return;
 }
@@ -158,20 +155,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
 
     switch ($requestClass) {
         case 'user':
-            //$address_id =   $put_vars['address_id'];
             $name =         $put_vars['name'];
             $surname=       $put_vars['surname'];
             $credits =      $put_vars['credits'];
-            // $pass =         $put_vars['pass'];
             
             $class = new User();
             $class->load($id);
-            
-            //$class->setAddressId($address_id);
+
             $class->setName($name);
             $class->setSurname($surname);
             $class->setCredits($credits);
-            // $class->setPass($pass);
             break;
         
         case 'box':

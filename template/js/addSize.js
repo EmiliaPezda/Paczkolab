@@ -1,11 +1,12 @@
 $(document).ready(function() {
 
-    var url = '../../router.php/size/';
+    let url = '../../router.php/size/';
 
 	// Send new SIZE to database
     $('#add-size input[type=submit]').on('click', function(event) {
         event.preventDefault();
-        var price = $('#add-size #price').val(),
+        console.log('ok');
+        let price = $('#add-size #price').val(),
             size = $('#add-size #size').val();
             
         $.ajax({

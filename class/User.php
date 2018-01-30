@@ -105,6 +105,12 @@ class User extends DB implements ActiveRecord, JsonSerializable{
         $this->id = -1;
     }
 
+
+    function jsonSerialize()
+    {
+        return $this->array;
+    }
+
     public function load($id)
     {
 
@@ -120,7 +126,7 @@ class User extends DB implements ActiveRecord, JsonSerializable{
             $this->pass = $row['pass'];
             $this->address_id = $row['address_id'];
 
-            return $this;
+            return $row;
 
         } else {
 
@@ -148,8 +154,8 @@ class User extends DB implements ActiveRecord, JsonSerializable{
     {
         if ($this->id == -1) {
 
-            $sql = "INSERT INTO user(address_id, name, surname, credits, pass) VALUES 
-            ('$this->address_id', '$this->name', '$this->surname', '$this->credits', '$this->pass')";
+            $sql = "INSERT INTO `user` (address_id, name, surname, credits, pass) VALUES 
+            ('$this->address_id', '$this->name', '$this->surname', $this->credits, '$this->pass')";
 
             if ($result = self::$conn->query($sql)) {
                 $this->id = self::$conn->lastInsertId();
@@ -201,9 +207,5 @@ class User extends DB implements ActiveRecord, JsonSerializable{
         }
     }
 
-    function jsonSerialize()
-    {
-        // TODO: Implement jsonSerialize() method.
-    }
 
 }

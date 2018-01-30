@@ -1,18 +1,18 @@
 $(document).ready(function() {
 
-    var urlAddress = '../../router.php/address/',
+    let urlAddress = '../../router.php/address/',
         urlUser = '../../router.php/user/',
         urlSize = '../../router.php/size/',
         urlParcel = '../../router.php/parcel/';
 
     // Functions which get data from other classes
-    var optionAddress = $('#address_option'),
+    let optionAddress = $('#address_option'),
         optionUser = $('#user_option'),
         optionSize = $('#size_option');
 
     function showAddressOption(address) {
         $.each(address, function(){
-            var option = $('<option>');
+            let option = $('<option>');
                 
             optionAddress.append(option);
             option.text(this.city + ' ' + this.code + ', ' + this.street + ' ' + this.flat);
@@ -22,7 +22,7 @@ $(document).ready(function() {
     
      function showUserOption(user) {
         $.each(user, function(){
-            var option = $('<option>');
+            let option = $('<option>');
                 
             optionUser.append(option);
             option.text(this.name + ' ' + this.surname);
@@ -32,7 +32,7 @@ $(document).ready(function() {
 
      function showSizeOption(size) {
         $.each(size, function(){
-            var option = $('<option>');
+            let option = $('<option>');
                 
             optionSize.append(option);
             option.text(this.size);
@@ -89,7 +89,7 @@ $(document).ready(function() {
 	// Send new PARCEL to database
     $('#add-parcel input[type=submit]').on('click', function(event) {
         event.preventDefault();
-        var address = $('#address_option option:selected').attr('data-id'),
+        let address = $('#address_option option:selected').attr('data-id'),
             user = $('#user_option option:selected').attr('data-id'),
             size = $('#size_option option:selected').attr('data-id');
             
