@@ -36,10 +36,9 @@ $(document).ready(function() {
 				actionDelete = $('<button>', {class: "delete-btn"}).text('Usuń'),
                 actionEdit = $('<button>', {class: "edit-btn"}).text('Edytuj'),
 				actionForm = $('<form>', {class: "edit-form hide"}),
-				inputAddress = $('<input>', {name: "address", id: "address"}),
-				inputName = $('<input>', {name: "name", id: "name"}),
-				inputSize = $('<input>', {name: "size", id: "size"}),
-				inputPrice = $('<input>', {name: "price", id: "price"}),
+				selectAddress = $('<select>', {name: "select address", id: "address_option"}),
+                selectUser = $('<select>', {name: "select user", id: "user_option"}),
+                selectSize = $('<select>', {name: "select size", id: "size_option"}),
 				inputSubmit = $('<input>', {type: "submit"});
 
 			// Create table element
@@ -52,10 +51,9 @@ $(document).ready(function() {
 			tdAction.append(actionDelete);
             tdAction.append(actionEdit);
 			tdAction.append(actionForm);
-			actionForm.append(inputAddress);
-			actionForm.append(inputName);
-			actionForm.append(inputSize);
-			actionForm.append(inputPrice);
+			actionForm.append(selectAddress);
+            actionForm.append(selectUser);
+            actionForm.append(selectSize);
 			actionForm.append(inputSubmit);
 			viewParcel.append(tr);
 
@@ -67,12 +65,12 @@ $(document).ready(function() {
 		    }
 
 			let addressId = this.address_id;
-			let url = '../../router.php/address/';
+			let urlAddress = '../../router.php/address/';
 
 			// Show data from database ADDRESS in table
 			$.ajax({
 				type: 'GET',
-				url: url + addressId,
+				url: urlAddress + addressId,
 				contentType: 'application/json',
 				dataType: 'json',
 				success: function(response){
@@ -91,12 +89,12 @@ $(document).ready(function() {
 		    }
 
 			let userId = this.user_id;
-			let url2 = '../../router.php/user/';
+			let urlUser = '../../router.php/user/';
 
 			// Show data from database USER in table
 			$.ajax({
 				type: 'GET',
-				url: url2 + userId,
+				url: urlUser + userId,
 				contentType: 'application/json',
 				dataType: 'json',
 				success: function(response){
@@ -116,12 +114,12 @@ $(document).ready(function() {
 		    }
 
 			let sizeId = this.size_id;
-			let url3 = '../../router.php/size/';
+			let urlSize = '../../router.php/size/';
 
 			// Show data from database SIZE in table
 			$.ajax({
 				type: 'GET',
-				url: url3 + sizeId,
+				url: urlSize + sizeId,
 				contentType: 'application/json',
 				dataType: 'json',
 				success: function(response){
@@ -133,6 +131,8 @@ $(document).ready(function() {
 			});
 			tdId.text(this.id);
     	});
+
+
 		// Delete PARCEL data
 		viewParcel.on('click', '.delete-btn', function(e){
 			e.preventDefault();
@@ -154,7 +154,8 @@ $(document).ready(function() {
 		})
 
 		//Edit PARCEL data
-        viewParcel.on('click', '.edit-btn', function(){
+        viewParcel.on('click', '.edit-btn', function() {
+
             let editForm = $(this).next('form');
             let edit = $(this).next('form').find('input[type=submit]');
 
@@ -164,43 +165,128 @@ $(document).ready(function() {
             let addressValue = $(this).parent().parent().find('td[class=address]').text();
             let nameValue = $(this).parent().parent().find('td[class=name]').text();
             let sizeValue = $(this).parent().parent().find('td[class=size]').text();
-            let priceValue = $(this).parent().parent().find('td[class=price]').text();
 
-            editForm.children('input[name=address]').val(addressValue);
-            editForm.children('input[name=name]').val(nameValue);
-            editForm.children('input[name=size]').val(sizeValue);
-            editForm.children('input[name=price]').val(priceValue);
 
-            edit.on('click', function(e){
+            //showing options during editing parcel
+            let urlAddress = '../../router.php/address/',
+                urlUser = '../../router.php/user/',
+                urlSize = '../../router.php/size/';
+
+
+            // Functions which get data from other classes
+            let formEditSelect = $(this).siblings('form');
+
+            let optionAddress = formEditSelect.children("#address_option"),
+                optionUser = formEditSelect.children("#user_option"),
+                optionSize = formEditSelect.children("#size_option");
+
+            function showAddressOption(address) {
+                $.each(address, function () {
+                    let option = $('<option>');
+
+                    optionAddress.append(option);
+                    option.text(this.city + ' ' + this.code + ', ' + this.street + ' ' + this.flat);
+                    option.val(this.id);
+
+                })
+            }
+
+            function showUserOption(user) {
+                $.each(user, function () {
+                    let option = $('<option>');
+
+                    optionUser.append(option);
+                    option.text(this.name + ' ' + this.surname);
+                    option.val(this.id);
+                })
+            }
+
+            function showSizeOption(size) {
+                $.each(size, function () {
+                    let option = $('<option>');
+
+                    optionSize.append(option);
+                    option.text(this.size);
+                    option.val(this.id);
+                })
+            }
+
+            function loadDataToEditParcel() {
+
+                $.ajax({
+                    type: 'GET',
+                    url: urlAddress,
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    success: function (response) {
+                        showAddressOption(response);
+                    },
+                    error: function (error) {
+                        alert("Wystąpił błąd");
+                        console.log(error);
+                    }
+                })
+
+                $.ajax({
+                    type: 'GET',
+                    url: urlUser,
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    success: function (response) {
+                        showUserOption(response);
+                    },
+                    error: function (error) {
+                        alert("Wystąpił błąd");
+                    }
+                })
+
+                $.ajax({
+                    type: 'GET',
+                    url: urlSize,
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    success: function (response) {
+                        showSizeOption(response);
+                    },
+                    error: function (error) {
+                        alert("Wystąpił błąd");
+                    }
+                })
+            }
+
+            loadDataToEditParcel();
+
+
+
+            edit.on('click', function (e) {
                 e.preventDefault();
+                let addressid =  optionAddress.find(':selected').val();
+                let nameid =  optionUser.find(':selected').val();
+                let sizeid =  optionSize.find(':selected').val();
 
-                //let addressid = this.address_id;
-                let address = $(this).siblings('#address').val();
-                let nameid = $(this).siblings('#name').val();
-                let sizeid = $(this).siblings('#size').val();
-                let price = $(this).siblings('#price').val();
+
 
                 $.ajax({
                     type: "PUT",
                     url: url,
                     data: {
                         id: id,
-                        address_id: address,
+                        address_id: addressid,
                         user_id: nameid,
                         size_id: sizeid,
-                        price: price,
 
                     },
-                    success: function(response) {
+                    success: function (response) {
                         alert('Dane zostaną zaktualizowane');
                         location.reload();
                     },
-                    error: function(error) {
-                        alert( "Wystąpił błąd");
+                    error: function (error) {
+                        alert("Wystąpił błąd");
                     }
                 });
             })
         })
-    }
+        }
+
 
 });

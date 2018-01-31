@@ -76,9 +76,9 @@ class Parcel extends DB implements ActiveRecord, JsonSerializable{
             $row = $result->fetch(PDO::FETCH_ASSOC);
 
             $this->id = $row['id'];
-            $this->name = $row['address_id'];
-            $this->surname = $row['user_id'];
-            $this->credits = $row['size_id'];
+            $this->address_id = $row['address_id'];
+            $this->user_id = $row['user_id'];
+            $this->size_id = $row['size_id'];
 
             return $row;
 
@@ -132,7 +132,6 @@ class Parcel extends DB implements ActiveRecord, JsonSerializable{
         $sql = "UPDATE parcel SET address_id=$this->address_id, user_id=$this->user_id, size_id=$this->size_id WHERE id=$this->id";
 
         if ($result = self::$conn->query($sql)) {
-
             return $this;
 
         } else {
