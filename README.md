@@ -20,3 +20,4 @@ $dsn = "mysql:host=$servername;dbname=$baseName;charset=utf8";
 
 ![Scheme](img/edit.png)
 
+![Scheme](img/menu.png)
