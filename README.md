@@ -1,5 +1,7 @@
 ## Paczkolab - REST Api  ##
 
+The application created with PHP, SQL and AJAX usage
+
 Configure your database in config.php file:
 
 $servername = "localhost"; <br>
