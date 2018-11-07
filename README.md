@@ -11,6 +11,8 @@ $baseName = "Paczkolab"; <br>
 
 $dsn = "mysql:host=$servername;dbname=$baseName;charset=utf8";
 
+SQL database structure and example records included in paczkolab.sql file.
+
 <h4> App usage </h4>
 
 &middot; adding users, addresses, boxes, sizes and parcels <br>
